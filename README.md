@@ -11,7 +11,12 @@ Este proyecto integra recolección de datos, análisis exploratorio y visualizac
 ## ¿Por qué Yapo.cl?
 
 Yapo.cl es uno de los portales de clasificados más populares en Chile, utilizado activamente por propietarios y corredores para publicar arriendos. Su alto volumen de publicaciones y categorización clara lo convierten en una fuente representativa y accesible para obtener datos actuales del mercado inmobiliario. Además, su estructura permite automatizar la extracción de información mediante técnicas de scraping.
+
+
 ![Vista de la pagina web de Yapo](img/web_yapo.png)
+
+Pagina web de yapo.cl
+
 ## Tecnologías utilizadas
 
 - **Python 3** (web scraping y análisis)
@@ -79,6 +84,8 @@ El análisis identificó:
 
 Puedes revisar el dashboard interactivo en Power BI [aquí](https://app.powerbi.com/view?r=eyJrIjoiN2U1MDkzYTgtZmRjNS00NDQ0LTkyYTEtMTNmNWE2NTNmN2JjIiwidCI6IjYwZjlmYmU3LTY3ZjMtNGE0OS1hZDkwLTNkMjYxZjkyMDRjMSJ9).
 
+![Vista de la pagina web de Yapo](visualizations/dashboard_yapo.png)
+Dashboard interactivo terminado
 ## Cómo ejecutar el proyecto
 
 1. Clona este repositorio.
