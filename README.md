@@ -84,7 +84,7 @@ El análisis identificó:
 
 Puedes revisar el dashboard interactivo en Power BI [aquí](https://app.powerbi.com/view?r=eyJrIjoiN2U1MDkzYTgtZmRjNS00NDQ0LTkyYTEtMTNmNWE2NTNmN2JjIiwidCI6IjYwZjlmYmU3LTY3ZjMtNGE0OS1hZDkwLTNkMjYxZjkyMDRjMSJ9).
 
-![Vista de la pagina web de Yapo](visualizations/dashboard_yapo.png)
+![Vista de la pagina web de Yapo](visualizations/captura_dashboard.png)
 Dashboard interactivo terminado
 ## Cómo ejecutar el proyecto
 
