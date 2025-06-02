@@ -37,6 +37,8 @@ Pagina web de yapo.cl
 - Columnas: Título, Comuna, Precio, Metros Cuadrados, Dormitorios, Baños, Estacionamientos
 - Problemas detectados: formatos inconsistentes, valores nulos, duplicados
 
+![Vista de raw_data](img/raw_data_preview.png)
+
 #### Modificaciones Principales
 
 ##### Precios
@@ -84,7 +86,7 @@ El análisis identificó:
 
 Puedes revisar el dashboard interactivo en Power BI [aquí](https://app.powerbi.com/view?r=eyJrIjoiN2U1MDkzYTgtZmRjNS00NDQ0LTkyYTEtMTNmNWE2NTNmN2JjIiwidCI6IjYwZjlmYmU3LTY3ZjMtNGE0OS1hZDkwLTNkMjYxZjkyMDRjMSJ9).
 
-![Vista de la pagina web de Yapo](visualizations/captura_dashboard.png)
+![Vista de dashboard](visualizations/captura_dashboard.png)
 Dashboard interactivo terminado
 ## Cómo ejecutar el proyecto
 
