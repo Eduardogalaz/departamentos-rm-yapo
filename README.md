@@ -1,6 +1,6 @@
 # Análisis de departamentos en arriendo en la Región Metropolitana (Yapo.cl - mayo 2025)
 
-Este proyecto integra recolección de datos, análisis exploratorio y visualización interactiva para examinar el mercado de arriendo de departamentos publicados en el portal Yapo.cl durante mayo de 2025 en la Región Metropolitana de Chile.
+Este proyecto integra recolección de datos, análisis exploratorio y visualización interactiva para examinar el mercado de arriendo de departamentos en la Región Metropolitana de Chile. Publicados en el portal Yapo.cl extraidos el 30 mayo de 2025 desde el portal web.
 
 ## Objetivos
 
