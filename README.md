@@ -29,6 +29,7 @@ Pagina web de yapo.cl
 - **Yapo.cl** como fuente de datos
 
 ## Resumen de Modificaciones a los Datos
+Una vez obtenidos los datos a partir del script de web scraper, se obtuvo un dataframe que luego fue transformado al formato csv. Con este archivo csv se hace un analisis exploratorio y la limpieza de los mismos, junto con las primeras visualizaciones para entender como se comportan los datos.
 
 ### Limpieza y Normalización (Python - EDA)
 
