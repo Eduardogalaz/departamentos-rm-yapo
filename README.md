@@ -1,117 +1,100 @@
-# Apartment Rental Analysis – Santiago Metropolitan Region (Yapo.cl, May 2025)
+# Análisis de departamentos en arriendo en la Región Metropolitana (Yapo.cl - mayo 2025)
 
-This project integrates **data scraping**, **exploratory data analysis (EDA)**, and **interactive visualization** to examine the apartment rental market in Santiago, Chile. Data was collected from [Yapo.cl](https://www.yapo.cl) on **May 30, 2025** using Python.
+Este proyecto integra recolección de datos, análisis exploratorio y visualización interactiva para examinar el mercado de arriendo de departamentos en la Región Metropolitana de Chile. Publicados en el portal Yapo.cl extraidos el 30 mayo de 2025 desde el portal web.
 
----
+## Objetivos
 
-## Objectives
+- Obtener datos actuales de arriendo desde Yapo.cl mediante técnicas de web scraping.
+- Realizar un análisis exploratorio de los principales indicadores del mercado de arriendo.
+- Diseñar un dashboard interactivo en Power BI para facilitar la comprensión de los datos.
 
-- Collect current rental listings using web scraping from Yapo.cl.
-- Perform EDA on key rental market indicators.
-- Build an interactive **Power BI** dashboard for business insight.
+## ¿Por qué Yapo.cl?
 
----
+Yapo.cl es uno de los portales de clasificados más populares en Chile, utilizado activamente por propietarios y corredores para publicar arriendos. Su alto volumen de publicaciones y categorización clara lo convierten en una fuente representativa y accesible para obtener datos actuales del mercado inmobiliario. Además, su estructura permite automatizar la extracción de información mediante técnicas de scraping.
 
-## Why Yapo.cl?
 
-[Yapo.cl](https://www.yapo.cl) is one of Chile’s most used classifieds websites. It is frequently updated by landlords and real estate agents and provides:
+![Vista de la pagina web de Yapo](img/web_yapo.png)
 
-- High listing volume
-- Standardized category structure
-- Publicly accessible data (suitable for automated extraction)
+Pagina web de yapo.cl
 
-This makes it an ideal real estate data source for real-time rental analysis.
+## Tecnologías utilizadas
 
-![Yapo website preview](img/web_yapo.png)
+- **Python 3** (web scraping y análisis)
+  - Requests
+  - BeautifulSoup
+  - pandas
+  - numpy
+- **Jupyter Notebook** (EDA)
+- **Power BI** (visualización interactiva)
+- **Yapo.cl** como fuente de datos
 
----
+## Resumen de Modificaciones a los Datos
+Una vez obtenidos los datos a partir del script de web scraper, se obtuvo un dataframe que luego fue transformado al formato csv. Con este archivo csv se hace un analisis exploratorio y la limpieza de los mismos, junto con las primeras visualizaciones para entender como se comportan los datos.
 
-## Tech Stack
+### Limpieza y Normalización (Python - EDA)
 
-| Tool | Purpose |
-|------|---------|
-| **Python 3** | Web scraping, cleaning, and preprocessing |
-| `requests` + `BeautifulSoup` | Scraping HTML content |
-| `pandas` + `numpy` | Data wrangling |
-| **Jupyter Notebook** | EDA workflow |
-| **Power BI** | Interactive dashboard and reporting |
-| **Yapo.cl** | Data source |
+#### Datos Originales
+- 12,690 registros iniciales
+- Columnas: Título, Comuna, Precio, Metros Cuadrados, Dormitorios, Baños, Estacionamientos
+- Problemas detectados: formatos inconsistentes, valores nulos, duplicados
 
----
+![Vista de raw_data](img/raw_data_preview.png)
 
----
+#### Modificaciones Principales
 
-## Data Cleaning Summary
+##### Precios
+- Separación de precios de texto adicional (ej: $350.000 - Oportunidad → 350000)
+- Conversión de UF a CLP (tasa: 1 UF = 39,184 CLP)
+- Corrección de errores (ej: UF500.000 → interpretado como CLP)
+- Eliminación de precios > $10M (posibles ventas)
 
-### Raw Data
-- 12,690 records
-- Columns: Title, Municipality, Price, Size (m²), Bedrooms, Bathrooms, Parking
-- Issues: Inconsistent formats, nulls, duplicates
+##### Metros Cuadrados
+- Extracción numérica de textos (ej: 50m2 → 50)
+- Imputación de nulos usando mediana por número de dormitorios
+- Creación de flag Metros_Imputados para registros ajustados
 
-### Key Cleaning Steps (Python)
+##### Otras Columnas
+- **Dormitorios**: Imputación con moda por comuna
+- **Baños**: Imputación basada en dormitorios (mínimo 1 baño)
+- **Estacionamientos**: Nulos convertidos a 0 (asumiendo "no especificado = 0")
 
-#### Price
-- Removed non-numeric text (e.g. `$350.000 - Oportunidad` → `350000`)
-- Converted **UF → CLP** at 1 UF = 39,184 CLP
-- Removed outliers > $10M CLP (likely sales)
+##### Limpieza Adicional
+- Eliminación de 4,908 duplicados (de 12,690 a 7,782 registros)
+- Filtrado de outliers (percentiles 1% y 99% para precios)
 
-#### Square Meters
-- Extracted numeric values (e.g. `50m2` → `50`)
-- Imputed missing values (median by bedroom count)
-- Added `Metros_Imputados` flag
+### Transformaciones en Power BI
 
-#### Other Columns
-- **Bedrooms**: Imputed using mode per municipality
-- **Bathrooms**: Imputed based on number of bedrooms
-- **Parking Spaces**: Nulls set to 0 (assumed “not specified”)
+#### **Modificaciones Destacadas**
 
-#### Additional Cleaning
-- Removed **4,908 duplicates**
-- Trimmed outliers (1st–99th percentile of price)
+**Filtrado de Datos**:
+   - Exclusión de propiedades con:
+     - Metros cuadrados ≥ 1000 (posibles errores)
+     - Estacionamientos = 10 (outlier)
+     - Títulos que contienen "pieza" o "Pieza" (no departamentos)
+     - Títulos que comienzan con "Busco" (demandas, no ofertas)
+     - Dormitorios = 11 (outlier)
+     - Precios < $100,000 CLP (no realistas)
 
----
+## Principales resultados
 
-## Power BI Filtering & Modeling
+El análisis identificó:
 
-### Records Removed If:
-- Size ≥ 1000 m² (likely incorrect)
-- Parking = 10 (outlier)
-- Title includes *"pieza"* or starts with *"busco"*
-- Bedrooms = 11
-- Price < $100,000 CLP (unrealistic)
+- Las comunas con más anuncios de arriendo.
+- El rango y promedio de precios de departamentos.
+- La distribución por tipo de unidad (1D1B, 2D2B, etc.).
+- La proporción de departamentos con y sin estacionamiento.
+- Tamaño promedio de departamentos según comuna.
 
----
+Puedes revisar el dashboard interactivo en Power BI [aquí](https://app.powerbi.com/view?r=eyJrIjoiN2U1MDkzYTgtZmRjNS00NDQ0LTkyYTEtMTNmNWE2NTNmN2JjIiwidCI6IjYwZjlmYmU3LTY3ZjMtNGE0OS1hZDkwLTNkMjYxZjkyMDRjMSJ9).
 
-## Key Insights
-
-- Most frequently listed municipalities
-- Rental price range and averages
-- Distribution by unit type (e.g. 1BR1BA, 2BR2BA)
-- Parking availability share
-- Average apartment size per municipality
-
-Explore the interactive dashboard [**here**](https://app.powerbi.com/view?r=eyJrIjoiN2U1MDkzYTgtZmRjNS00NDQ0LTkyYTEtMTNmNWE2NTNmN2JjIiwidCI6IjYwZjlmYmU3LTY3ZjMtNGE0OS1hZDkwLTNkMjYxZjkyMDRjMSJ9).
-
-![Dashboard Preview](visualizations/captura_dashboard.png)
-
----
-
-## How to Run the Project
-
+![Vista de dashboard](visualizations/captura_dashboard.png)
+Dashboard interactivo terminado
+## Cómo ejecutar el proyecto
 ```bash
-# 1. Clone this repo
-git clone https://github.com/yourusername/your-repo-name.git
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Run the scraper (optional: specify region & pages)
-jupyter notebook notebooks/scraping_yapo_departamentos.ipynb
-
-# 4. Run the EDA notebook
-jupyter notebook notebooks/eda_departamentos_rm.ipynb
-
-
-
-
-
+1. Clona este repositorio.
+2. Instala las dependencias:
+   pip install -r requirements.txt
+3. Ejecuta el script de scraping:
+   python scripts/scraping_yapo_departamentos.py
+4. Revisa el análisis exploratorio en:
+   notebooks/eda_departamentos_rm.ipynb
